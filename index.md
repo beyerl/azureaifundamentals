@@ -235,5 +235,65 @@ Optical character recognition is a technique used to detect and read text in ima
 <p>Mathematically, you can think of machine learning as a way of defining a function (let’s call it  <em><strong>f</strong></em>) that operates on one or more  <em>features</em>  of something (which we’ll call  <em><strong>x</strong></em>) to calculate a predicted  <em>label</em>  (<em><strong>y</strong></em>) - like this:</p>
 <p><em><strong>f(x) = y</strong></em></p>
 <p>The specific operation that the  <em><strong>f</strong></em>  function performs on  <em>x</em>  to calculate  <em>y</em>  depends on a number of factors, including the type of model you’re trying to create and the specific algorithm used to train the model. Additionally in most cases, the data used to train the machine learning model requires some pre-processing before model training can be performed.</p>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/use-automated-machine-learning/create-workspace">Hier weiter</a></p>
+<h3 id="create-an-azure-machine-learning-workspace">Create an Azure Machine Learning workspace</h3>
+<p>Azure Machine Learning is a cloud-based platform for building and operating machine learning solutions in Azure. It includes a wide range of features and capabilities that help data scientists prepare data, train models, publish predictive services, and monitor their usage. Most importantly, it helps data scientists increase their efficiency by automating many of the time-consuming tasks associated with training models; and it enables them to use cloud-based compute resources that scale effectively to handle large volumes of data while incurring costs only when actually used.</p>
+<h4 id="create-an-azure-machine-learning-workspace-1">Create an Azure Machine Learning workspace</h4>
+<ol>
+<li>Sign into the <a href="https://portal.azure.com/">Azure portal</a></li>
+<li>Select <strong>＋Create a resource</strong>, search for <em>Machine Learning</em>, and create a new <strong>Machine Learning</strong> resource with the following settings:</li>
+</ol>
+<ul>
+<li><strong>Subscription</strong>: <em>Your Azure subscription</em></li>
+<li><strong>Resource group</strong>: <em>Create or select a resource group</em></li>
+<li><strong>Workspace name</strong>: <em>Enter a unique name for your workspace</em></li>
+<li><strong>Region</strong>: <em>Select the geographical region closest to you</em></li>
+<li><strong>Storage account</strong>: <em>Note the default new storage account that will be created for your workspace</em></li>
+<li><strong>Key vault</strong>: <em>Note the default new key vault that will be created for your workspace</em></li>
+<li><strong>Application insights</strong>: <em>Note the default new application insights resource that will be created for your workspace</em></li>
+<li><strong>Container registry</strong>: None (<em>one will be created automatically the first time you deploy a model to a container</em>)</li>
+</ul>
+<h3 id="create-compute-resources">Create compute resources</h3>
+<p>At its core, Azure Machine Learning is a platform for training and managing machine learning models, for which you need compute on which to run the training process.</p>
+<h4 id="create-compute-targets">Create compute targets</h4>
+<p>Compute targets are cloud-based resources on which you can run model training and data exploration processes.</p>
+<p>In <a href="https://ml.azure.com/">Azure Machine Learning studio</a>, view the <strong>Compute</strong> page (under <strong>Manage</strong>). There are four kinds of compute resource you can create:</p>
+<ul>
+<li><strong>Compute Instances</strong>: Development workstations that data scientists can use to work with data and models.</li>
+<li><strong>Compute Clusters</strong>: Scalable clusters of virtual machines for on-demand processing of experiment code.</li>
+<li><strong>Inference Clusters</strong>: Deployment targets for predictive services that use your trained models.</li>
+<li><strong>Attached Compute</strong>: Links to existing Azure compute resources, such as Virtual Machines or Azure Databricks clusters.</li>
+</ul>
+<h3 id="explore-data">Explore data</h3>
+<p>Machine learning models must be trained with existing data.</p>
+<h4 id="create-a-dataset">Create a dataset</h4>
+<p>In Azure Machine Learning, data for model training and other operations is usually encapsulated in an object called a <em>dataset</em>.</p>
+<p>In <a href="https://ml.azure.com/">Azure Machine Learning studio</a>, view the <strong>Datasets</strong> page. You can create a new dataset e.g. <strong>from web files</strong>.</p>
+<h3 id="train-a-machine-learning-model">Train a machine learning model</h3>
+<p>Azure Machine Learning includes an <em>automated machine learning</em> capability that leverages the scalability of cloud compute to automatically try multiple pre-processing techniques and model-training algorithms in parallel to find the best performing supervised machine learning model for your data.</p>
+<p>The automated machine learning capability in Azure Machine Learning supports <em>supervised</em> machine learning models - in other words, models for which the training data includes known label values. You can use automated machine learning to train models for:</p>
+<ul>
+<li><strong>Classification</strong> (predicting categories or <em>classes</em>)</li>
+<li><strong>Regression</strong> (predicting numeric values)</li>
+<li><strong>Time series forecasting</strong> (regression with a time-series element, enabling you to predict numeric values at a future point in time)</li>
+</ul>
+<p>Each possible combination of training algorithm and pre-processing steps is tried and the performance of the resulting model is evaluated.</p>
+<p>The best model is identified based on the evaluation metric you specified (e.g. <em>Normalized root mean squared error</em>). To calculate this metric, the training process used some of the data to train the model, and applied a technique called <em>cross-validation</em> to iteratively test the trained model with data it wasn’t trained with and compare the predicted value with the actual known value.</p>
+<p>The difference between the predicted and actual value (known as the <em>residuals</em>) indicates the amount of <em>error</em> in the model, and this particular performance metric is calculated by squaring the errors across all of the test cases, finding the mean of these squares, and then taking the square root. What all of this means is that smaller this value is, the more accurately the model is predicting.<br>
+Then review the charts, which show the performance of the model by comparing the predicted values against the true values, and by showing the <em>residuals</em> (differences between predicted and actual values) as a histogram.</p>
+<p>The <strong>Predicted vs. True</strong> chart should show a diagonal trend in which the predicted value correlates closely to the true value. A dotted line shows how a perfect model should perform, and the closer the line for your model’s average predicted value is to this, the better its performance. A histogram below the line chart shows the distribution of true values.</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/use-automated-machine-learning/media/predicted-vs-true.png" alt="Predicted vs True chart"></p>
+<p>The <strong>Residual Histogram</strong> shows the frequency of residual value ranges. Residuals represent variance between predicted and true values that can’t be explained by the model - in other words, errors; so what you should hope to see is that the most frequently occurring residual values are clustered around 0 (in other words, most of the errors are small), with fewer errors at the extreme ends of the scale.</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/use-automated-machine-learning/media/residual-histogram.png" alt="Residuals histogram"></p>
+<h3 id="deploy-a-model-as-a-service">Deploy a model as a service</h3>
+<p>After you’ve used automated machine learning to train some models, you can deploy the best performing model as a service for client applications to use.</p>
+<h4 id="deploy-a-predictive-service">Deploy a predictive service</h4>
+<p>In Azure Machine Learning, you can deploy a service as an Azure Container Instances (ACI) or to an Azure Kubernetes Service (AKS) cluster. For production scenarios, an AKS deployment is recommended, for which you must create an <em>inference cluster</em> compute target.</p>
+<p>You need this information to connect to your deployed service from a client application.</p>
+<ul>
+<li>The REST endpoint for your service</li>
+<li>the Primary Key for your service</li>
+</ul>
+<h4 id="test-the-deployed-service">Test the deployed service</h4>
+<p>E.g. use a Notebook running a Python Script in Azure Machine Learning Studio to consume the created endpoint.</p>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/create-regression-model-azure-machine-learning-designer/">hier weiter</a></p>
 
