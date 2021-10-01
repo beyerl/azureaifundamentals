@@ -295,5 +295,7 @@ Then review the charts, which show the performance of the model by comparing the
 </ul>
 <h4 id="test-the-deployed-service">Test the deployed service</h4>
 <p>E.g. use a Notebook running a Python Script in Azure Machine Learning Studio to consume the created endpoint.</p>
+<h3 id="create-a-regression-model-with-azure-machine-learning-designer">Create a Regression Model with Azure Machine Learning designer</h3>
+<p><em>Regression</em> is a form of machine learning that is used to predict a numeric <em>label</em> based on an item’s <em>features</em>. For example, an automobile sales company might use the characteristics of a car (such as engine size, number of seats, mileage, and so on) to predict its likely selling price.</p>
 <p><a href="https://docs.microsoft.com/en-us/learn/modules/create-regression-model-azure-machine-learning-designer/">hier weiter</a></p>
 
