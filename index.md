@@ -297,5 +297,40 @@ Then review the charts, which show the performance of the model by comparing the
 <p>E.g. use a Notebook running a Python Script in Azure Machine Learning Studio to consume the created endpoint.</p>
 <h3 id="create-a-regression-model-with-azure-machine-learning-designer">Create a Regression Model with Azure Machine Learning designer</h3>
 <p><em>Regression</em> is a form of machine learning that is used to predict a numeric <em>label</em> based on an item’s <em>features</em>. For example, an automobile sales company might use the characteristics of a car (such as engine size, number of seats, mileage, and so on) to predict its likely selling price.</p>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/create-regression-model-azure-machine-learning-designer/">hier weiter</a></p>
+<p>Regression is an example of a <em>supervised</em> machine learning technique in which you train a model using data that includes both the features and known values for the label, so that the model learns to <em>fit</em> the feature combinations to the label. Then, after training has been completed, you can use the trained model to predict labels for new items for which the label is unknown.</p>
+<p>You can use Microsoft Azure Machine Learning designer to create regression models by using a drag and drop visual interface, without needing to write any code.</p>
+<h3 id="create-an-azure-machine-learning-workspace-2">Create an Azure Machine Learning workspace</h3>
+<p>see above</p>
+<h3 id="create-compute-resources-1">Create compute resources</h3>
+<p>see above</p>
+<h3 id="explore-data-1">Explore data</h3>
+<p>To train a regression model, you need a dataset that includes historical <em>features</em> (characteristics of the entity for which you want to make a prediction) and known <em>label</em> values (the numeric value that you want to train a model to predict).</p>
+<h4 id="create-a-pipeline">Create a pipeline</h4>
+<p>To use the Azure Machine Learning designer, you create a <em>pipeline</em> that you will use to train a machine learning model. This pipeline starts with the dataset from which you want to train the model. You need to specify a compute target on which to run the pipeline. Remove columns with too many missing values and remaining rows with missing values from the dataset. Mitigate possible bias by <em>normalizing</em> the numeric columns so they’re on the similar scales.</p>
+<h4 id="add-data-transformations">Add data transformations</h4>
+<p>You typically apply data transformations to prepare the data for modeling. In the case of the automobile price data, you’ll add transformations to address the issues you identified when exploring the data: Select Columns in Dataset, Clean Missing Data, Normalize Data.</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/create-regression-model-azure-machine-learning-designer/media/data-transforms.png" alt="Automobile price data (Raw) dataset with Select Columns in Dataset, Clean Missing Data, and Normalize Data modules"></p>
+<h4 id="run-the-pipeline">Run the pipeline</h4>
+<p>To apply your data transformations, you need to run the pipeline as an experiment.</p>
+<h4 id="view-the-transformed-data">View the transformed data</h4>
+<p>The dataset is now prepared for model training.</p>
+<h3 id="create-and-run-a-training-pipeline">Create and run a training pipeline</h3>
+<p>It’s common practice to train the model using a subset of the data, while holding back some data with which to test the trained model. This enables you to compare the labels that the model predicts with the actual known labels in the original dataset.</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/create-regression-model-azure-machine-learning-designer/media/train-score.png" alt="split data, then train with linear regression and score"><br>
+<img src="https://docs.microsoft.com/en-us/azure/machine-learning/media/algorithm-cheat-sheet/machine-learning-algorithm-cheat-sheet.png" alt="Machine Learning Algorithm Cheat Sheet: Learn how to choose a Machine Learning algorithm."></p>
+<h4 id="run-the-training-pipeline">Run the training pipeline</h4>
+<p>Now you’re ready to run the training pipeline and train the model.</p>
+<p>When the experiment run has completed, select the <strong>Score Model</strong> module and in the settings pane, on the <strong>Outputs + logs</strong> tab, under <strong>Data outputs</strong> in the <strong>Scored dataset</strong> section, use the <strong>Preview Data</strong> icon to view the results.</p>
+<h3 id="evaluate-a-regression-model">Evaluate a regression model</h3>
+<h4 id="add-an-evaluate-model-module">Add an Evaluate Model module</h4>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/create-regression-model-azure-machine-learning-designer/media/evaluate.png" alt="Evaluate Model module added to Score Model module">When the experiment run has completed, select the <strong>Evaluate Model</strong> module and in the settings pane, on the <strong>Outputs + logs</strong> tab, under <strong>Data outputs</strong> in the <strong>Evaluation results</strong> section, use the <strong>Preview Data</strong> icon to view the results. These include the following regression performance metrics:</p>
+<ul>
+<li><strong>Mean Absolute Error (MAE)</strong>: The average difference between predicted values and true values. This value is based on the same units as the label, in this case dollars. The lower this value is, the better the model is predicting.</li>
+<li><strong>Root Mean Squared Error (RMSE)</strong>: The square root of the mean squared difference between predicted and true values. The result is a metric based on the same unit as the label (dollars). When compared to the MAE (above), a larger difference indicates greater variance in the individual errors (for example, with some errors being very small, while others are large).</li>
+<li><strong>Relative Squared Error (RSE)</strong>: A relative metric between 0 and 1 based on the square of the differences between predicted and true values. The closer to 0 this metric is, the better the model is performing. Because this metric is relative, it can be used to compare models where the labels are in different units.</li>
+<li><strong>Relative Absolute Error (RAE)</strong>: A relative metric between 0 and 1 based on the absolute differences between predicted and true values. The closer to 0 this metric is, the better the model is performing. Like RSE, this metric can be used to compare models where the labels are in different units.</li>
+<li><strong>Coefficient of Determination (R2)</strong>: This metric is more commonly referred to as <em>R-Squared</em>, and summarizes how much of the variance between predicted and true values is explained by the model. The closer to 1 this value is, the better the model is performing.</li>
+</ul>
+<h3 id="create-an-inference-pipeline">Create an inference pipeline</h3>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/create-regression-model-azure-machine-learning-designer/inference-pipeline">hier weiter</a></p>
 
