@@ -372,5 +372,73 @@ Plotting these metrics against each other for every possible threshold value bet
 <h3 id="create-an-inference-pipeline-1">Create an inference pipeline</h3>
 <p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/create-classification-model-azure-machine-learning-designer/media/inference-changes.png" alt="An inference pipeline with changes indicated"></p>
 <h3 id="deploy-a-predictive-service-2">Deploy a predictive service</h3>
-<p><a href="https://docs.microsoft.com/de-de/learn/modules/create-clustering-model-azure-machine-learning-designer/">hier weiter</a></p>
+<h2 id="create-a-clustering-model-with-azure-machine-learning-designer">Create a Clustering Model with Azure Machine Learning designer</h2>
+<p><em>Clustering</em> is a form of machine learning that is used to group similar items into clusters based on their features. For example, a researcher might take measurements of penguins, and group them based on similarities in their proportions.</p>
+<p>Clustering is an example of <em>unsupervised</em> machine learning, in which you train a model to separate items into clusters based purely on their characteristics, or <em>features</em>. There is no previously known cluster value (or <em>label</em>) from which to train the model.</p>
+<h3 id="explore-data-3">Explore data</h3>
+<h3 id="create-and-run-a-training-pipeline-2">Create and run a training pipeline</h3>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/create-clustering-model-azure-machine-learning-designer/media/k-means.png" alt="split data, then use the K-Means Clustering algorithm to train a model and the Assign Data to Modules module to test it"><br>
+The <em>K-Means</em> algorithm groups items into the number of clusters you specify - a value referred to as <em><strong>K</strong></em>.</p>
+<p>You can think of data observations, like the penguin measurements, as being multidimensional vectors. The K-Means algorithm works by:</p>
+<ol>
+<li>initializing <em>K</em> coordinates as randomly selected points called <em>centroids</em> in <em>n</em>-dimensional space (where <em>n</em> is the number of dimensions in the feature vectors).</li>
+<li>Plotting the feature vectors as points in the same space, and assigning each point to its closest centroid.</li>
+<li>Moving the centroids to the middle of the points allocated to it (based on the <em>mean</em> distance).</li>
+<li>Reassigning the points to their closest centroid after the move.</li>
+<li>Repeating steps 3 and 4 until the cluster allocations stabilize or the specified number of iterations has completed.</li>
+</ol>
+<h3 id="evaluate-a-clustering-model">Evaluate a clustering model</h3>
+<p>Evaluating a clustering model is made difficult by the fact that there are no previously known <em>true</em> values for the cluster assignments. A successful clustering model is one that achieves a good level of separation between the items in each cluster, so we need metrics to help us measure that separation.</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/create-clustering-model-azure-machine-learning-designer/media/evaluate-cluster.png" alt="Evaluate Model module added to Assign Data to Clusters module"><br>
+The metrics in each row are:</p>
+<ul>
+<li><strong>Average Distance to Other Center</strong>: This indicates how close, on average, each point in the cluster is to the centroids of all other clusters.</li>
+<li><strong>Average Distance to Cluster Center</strong>: This indicates how close, on average, each point in the cluster is to the centroid of the cluster.</li>
+<li><strong>Number of Points</strong>: The number of points assigned to the cluster.</li>
+<li><strong>Maximal Distance to Cluster Center</strong>: The maximum of the distances between each point and the centroid of that point’s cluster. If this number is high, the cluster may be widely dispersed. This statistic in combination with the <strong>Average Distance to Cluster Center</strong> helps you determine the cluster’s <em>spread</em>.</li>
+</ul>
+<h3 id="create-an-inference-pipeline-2">Create an inference pipeline</h3>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/create-clustering-model-azure-machine-learning-designer/media/inference-changes.png" alt="Replace penguin-data dataset with Enter Data Manually module. Remove Select Columns in Dataset and Evaluate Model modules"></p>
+<h3 id="deploy-a-predictive-service-3">Deploy a predictive service</h3>
+<p>Use the <strong>predict-penguin-clusters</strong> service you created to predict a cluster assignment.</p>
+<h1 id="explore-computer-vision-in-microsoft-azure">Explore computer vision in Microsoft Azure</h1>
+<h2 id="analyze-images-with-the-computer-vision-service">Analyze images with the Computer Vision service</h2>
+<p><em>Computer vision</em> is one of the core areas of artificial intelligence (AI), and focuses on creating solutions that enable AI applications to “see” the world and make sense of it.</p>
+<p>Some potential uses for computer vision include:</p>
+<ul>
+<li>
+<p><strong>Content Organization</strong>: Identify people or objects in photos and organize them based on that identification. Photo recognition applications like this are commonly used in photo storage and social media applications.</p>
+</li>
+<li>
+<p><strong>Text Extraction</strong>: Analyze images and PDF documents that contain text and extract the text into a structured format.</p>
+</li>
+<li>
+<p><strong>Spatial Analysis</strong>: Identify people or objects, such as cars, in a space and map their movement within that space.</p>
+</li>
+</ul>
+<p>To an AI application, an image is just an array of pixel values. These numeric values can be used as <em>features</em> to train machine learning models that make predictions about the image and its contents.</p>
+<h3 id="get-started-with-image-analysis-on-azure">Get started with image analysis on Azure</h3>
+<h4 id="azure-resources-for-computer-vision">Azure resources for Computer Vision</h4>
+<p>In Microsoft Azure, the <strong>Computer Vision</strong> cognitive service uses pre-trained models to analyze images, enabling software developers to easily build applications that can:</p>
+<ul>
+<li>Interpret an image and suggest an appropriate caption.</li>
+<li>Suggest relevant <em>tags</em> that could be used to index an image.</li>
+<li>Categorize an image.</li>
+<li>Identify objects in an image.</li>
+<li>Detect faces and people in an image.</li>
+<li>Recognize celebrities and landmarks in an image.</li>
+<li>Read text in an image.</li>
+</ul>
+<p>To use the Computer Vision service, you need to create a resource for it in your Azure subscription. You can use either of the following resource types:</p>
+<ul>
+<li><strong>Computer Vision</strong>: A specific resource for the Computer Vision service. Use this resource type if you don’t intend to use any other cognitive services, or if you want to track utilization and costs for your Computer Vision resource separately.</li>
+<li><strong>Cognitive Services</strong>: A general cognitive services resource that includes Computer Vision along with many other cognitive services; such as Text Analytics, Translator Text, and others. Use this resource type if you plan to use multiple cognitive services and want to simplify administration and development.</li>
+<li></li>
+</ul>
+<p>Whichever type of resource you choose to create, it will provide two pieces of information that you will need to use it:</p>
+<ul>
+<li>A <strong>key</strong> that is used to authenticate client applications.</li>
+<li>An <strong>endpoint</strong> that provides the HTTP address at which your resource can be accessed.</li>
+</ul>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/analyze-images-computer-vision/2-image-analysis-azure">hier weiter</a></p>
 
