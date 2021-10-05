@@ -467,6 +467,49 @@ The metrics in each row are:</p>
 <li>Generate thumbnails - creating small versions of images.</li>
 <li>Moderate content - detecting images that contain adult content or depict violent, gory scenes.</li>
 </ul>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/classify-images-custom-vision/?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.wwl.explore-computer-vision-microsoft-azure">hier weiter</a><br>
+<h2 id="classify-images-with-the-custom-vision-service">Classify images with the Custom Vision service</h2>
+<p>Image classification is a common workload in artificial intelligence (AI) applications. It harnesses the predictive power of machine learning to enable AI systems to identify real-world items based on images.</p>
+<p>Some potential uses for image classification include:</p>
+<ul>
+<li><strong>Product identification</strong>: performing visual searches for specific products in online searches or even, in-store using a mobile device.</li>
+<li><strong>Disaster investigation</strong>: identifying key infrastructure for major disaster preparation efforts. For example, identifying bridges and roads in aerial images can help disaster relief teams plan ahead in regions that are not well mapped.</li>
+<li><strong>Medical diagnosis</strong>: evaluating images from X-ray or MRI devices could quickly classify specific issues found as cancerous tumors, or many other medical conditions related to medical imaging diagnosis.</li>
+<li><strong>Anomaly detection</strong>: performing visual detection for defects or anomalies in products during manufacturing processes.</li>
+</ul>
+<p>Training a machine learning model to classify images from scratch requires considerable time, deep learning expertise, and data. Microsoft’s Custom Vision service enables you to build image classification models that can be deployed as AI solutions. Using the Custom Vision service requires less time and machine learning expertise than building from scratch.</p>
+<p>The <em>Computer Vision</em> cognitive service provides useful pre-built models for working with images, but you’ll often need to train your own model for computer vision.</p>
+<p>In Azure, you can use the <strong><em>Custom Vision</em></strong> cognitive service to train an image classification model based on existing images. There are two elements to creating an image classification solution. First, you must train a model to recognize different classes using existing images. Then, when the model is trained you must publish it as a service that can be consumed by applications.</p>
+<h3 id="understand-classification">Understand classification</h3>
+<p>You can use a machine learning <em>classification</em> technique to predict which category, or <em>class</em>, something belongs to. Classification machine learning models use a set of inputs, which we call <em>features</em>, to calculate a probability score for each possible class and predict a <em>label</em> that indicates the most likely class that an object belongs to.</p>
+<h4 id="understand-image-classification">Understand image classification</h4>
+<p><em>Image classification</em> is a machine learning technique in which the object being classified is an image, such as a photograph.</p>
+<p>To create an image classification model, you need data that consists of features and their labels. The existing data is a set of categorized images. Digital images are made up of an array of pixel values, and these are used as features to train the model based on the known image classes.</p>
+<h4 id="azures-custom-vision-service">Azure’s Custom Vision service</h4>
+<p>Most modern image classification solutions are based on <em>deep learning</em> techniques that make use of <em>convolutional neural networks</em> (CNNs) to uncover patterns in the pixels that correspond to particular classes.<br>
+Common techniques used to train image classification models have been encapsulated into the <strong>Custom Vision</strong> cognitive service in Microsoft Azure; making it easy to train a model and publish it as a software service with minimal knowledge of deep learning techniques.</p>
+<h3 id="get-started-with-image-classification-on-azure">Get started with image classification on Azure</h3>
+<h4 id="azure-resources-for-custom-vision">Azure resources for Custom Vision</h4>
+<p>Creating an image classification solution with Custom Vision consists of two main tasks. First you must use existing images to train the model, and then you must publish the model so that client applications can use it to generate predictions.</p>
+<h4 id="model-training">Model training</h4>
+<p>To train a classification model, you must upload images to your training resource and label them with the appropriate class labels. Then, you must train the model and evaluate the training results.</p>
+<p>You can perform these tasks in the <a href="https://www.customvision.ai"><em>Custom Vision portal</em></a>, or if you have the necessary coding experience you can use one of the Custom Vision service programming language-specific <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Custom-Vision-Service/quickstarts/image-classification">software development kits (SDKs)</a>.</p>
+<h4 id="model-evaluation">Model evaluation</h4>
+<p>Model training process is an iterative process in which the Custom Vision service repeatedly trains the model using some of the data, but holds some back to evaluate the model. At the end of the training process, the performance for the trained model is indicated by the following evaluation metrics:</p>
+<ul>
+<li><strong>Precision</strong>: What percentage of the class predictions made by the model were correct? For example, if the model predicted that 10 images are oranges, of which eight were actually oranges, then the precision is 0.8 (80%).</li>
+<li><strong>Recall</strong>: What percentage of class predictions did the model correctly identify? For example, if there are 10 images of apples, and the model found 7 of them, then the recall is 0.7 (70%).</li>
+<li><strong>Average Precision (AP)</strong>: An overall metric that takes into account both precision and recall).</li>
+</ul>
+<p>One way to improve the performance of your model is to add more images to the training set.</p>
+<h4 id="using-the-model-for-prediction">Using the model for prediction</h4>
+<p>After you’ve trained the model, and you’re satisfied with its evaluated performance, you can publish the model to your prediction resource.</p>
+<p>To use your model, client application developers need the following information:</p>
+<ul>
+<li><strong>Project ID</strong>: The unique ID of the Custom Vision project you created to train the model.</li>
+<li><strong>Model name</strong>: The name you assigned to the model during publishing.</li>
+<li><strong>Prediction endpoint</strong>: The HTTP address of the endpoints for the <em>prediction</em> resource to which you published the model (<em><strong>not</strong></em> the training resource).</li>
+<li><strong>Prediction key</strong>: The authentication key for the <em>prediction</em> resource to which you published the model (<em><strong>not</strong></em> the training resource).</li>
+</ul>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/detect-objects-images-custom-vision/">hier weiter</a><br>
 <a href="https://github.com/MicrosoftLearning/mslearn-ai900">mslearn-ai900</a></p>
 
