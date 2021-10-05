@@ -510,6 +510,21 @@ Common techniques used to train image classification models have been encapsulat
 <li><strong>Prediction endpoint</strong>: The HTTP address of the endpoints for the <em>prediction</em> resource to which you published the model (<em><strong>not</strong></em> the training resource).</li>
 <li><strong>Prediction key</strong>: The authentication key for the <em>prediction</em> resource to which you published the model (<em><strong>not</strong></em> the training resource).</li>
 </ul>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/detect-objects-images-custom-vision/">hier weiter</a><br>
+<h2 id="detect-objects-in-images-with-the-custom-vision-service">Detect objects in images with the Custom Vision service</h2>
+<p><em>Object detection</em> is a form of machine learning based computer vision in which a model is trained to recognize individual types of object in an image, and to identify their location in the image.</p>
+<p>Notice that an object detection model returns the following information:</p>
+<ul>
+<li>The <em>class</em> of each object identified in the image.</li>
+<li>The probability score of the object classification (which you can interpret as the <em>confidence</em> of the predicted class being correct)</li>
+<li>The coordinates of a <em>bounding box</em> for each object.</li>
+</ul>
+<h3 id="get-started-with-object-detection-on-azure">Get started with object detection on Azure</h3>
+<p>The <strong>Custom Vision</strong> cognitive service in Azure enables you to create object detection models that meet the needs of many computer vision scenarios with minimal deep learning expertise and fewer training images.</p>
+<h4 id="azure-resources-for-custom-vision-1">Azure resources for Custom Vision</h4>
+<p>If you choose to create a Custom Vision resource, you will be prompted to choose <em>training</em>, <em>prediction</em>, or <em>both</em> - and it’s important to note that if you choose “both”, then <em><strong>two</strong></em> resources are created - one for training and one for prediction.</p>
+<p>It’s also possible to take a mix-and-match approach in which you use a dedicated Custom Vision resource for training, but deploy your model to a Cognitive Services resource for prediction. For this to work, the training and prediction resources must be created in the same region.</p>
+<h4 id="image-tagging">Image tagging</h4>
+<p>Before you can train an object detection model, you must tag the classes and bounding box coordinates in a set of training images. This process can be time-consuming, but the <em>Custom Vision portal</em> provides a graphical interface that makes it straightforward.</p>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/detect-analyze-faces/">hier weiter</a><br>
 <a href="https://github.com/MicrosoftLearning/mslearn-ai900">mslearn-ai900</a></p>
 
