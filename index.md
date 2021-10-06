@@ -525,6 +525,311 @@ Common techniques used to train image classification models have been encapsulat
 <p>It’s also possible to take a mix-and-match approach in which you use a dedicated Custom Vision resource for training, but deploy your model to a Cognitive Services resource for prediction. For this to work, the training and prediction resources must be created in the same region.</p>
 <h4 id="image-tagging">Image tagging</h4>
 <p>Before you can train an object detection model, you must tag the classes and bounding box coordinates in a set of training images. This process can be time-consuming, but the <em>Custom Vision portal</em> provides a graphical interface that makes it straightforward.</p>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/detect-analyze-faces/">hier weiter</a><br>
+<h4 id="model-training-and-evaluation">Model training and evaluation</h4>
+<p>At the end of the training process, the performance for the trained model is indicated by the following evaluation metrics:</p>
+<ul>
+<li><strong>Precision</strong>: What percentage of class predictions did the model correctly identify? For example, if the model predicted that 10 images are oranges, of which eight were actually oranges, then the precision is 0.8 (80%).</li>
+<li><strong>Recall</strong>: What percentage of the class predictions made by the model were correct? For example, if there are 10 images of apples, and the model found 7 of them, then the recall is 0.7 (70%).</li>
+<li><strong>Mean Average Precision (mAP)</strong>: An overall metric that takes into account both precision and recall across all classes).</li>
+</ul>
+<h2 id="detect-and-analyze-faces-with-the-face-service">Detect and analyze faces with the Face service</h2>
+<p>Face detection and analysis is an area of artificial intelligence (AI) in which we use algorithms to locate and analyze human faces in images or video content.</p>
+<h3 id="introduction">Introduction</h3>
+<p>Face detection and analysis is an area of artificial intelligence (AI) in which we use algorithms to locate and analyze human faces in images or video content.</p>
+<h4 id="face-detection">Face detection</h4>
+<p>Face detection involves identifying regions of an image that contain a human face, typically by returning <em>bounding box</em> coordinates that form a rectangle around the face, like this:</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/detect-analyze-faces/media/face-detection.png" alt="An image with two faces highlighted in rectangles"></p>
+<h4 id="facial-analysis">Facial analysis</h4>
+<p>Moving beyond simple face detection, some algorithms can also return other information, such as facial landmarks (nose, eyes, eyebrows, lips, and others).</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/detect-analyze-faces/media/landmarks-1.png" alt="facial landmarks image showing data around face characteristics"></p>
+<p>These facial landmarks can be used as features with which to train a machine learning model from which you can infer information about a person, such as their perceived age or perceived emotional state, like this:</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/detect-analyze-faces/media/face-attributes.png" alt="A happy 25-year old"></p>
+<h4 id="facial-recognition">Facial recognition</h4>
+<p>A further application of facial analysis is to train a machine learning model to identify known individuals from their facial features. This usage is more generally known as <em>facial recognition</em>, and involves using multiple images of each person you want to recognize to train a model so that it can detect those individuals in new images on which it wasn’t trained.</p>
+<p><img src="https://docs.microsoft.com/en-us/learn/wwl-data-ai/detect-analyze-faces/media/facial-recognition.png" alt="A person identified as &quot;Wendell&quot;"></p>
+<h4 id="uses-of-face-detection-and-analysis">Uses of face detection and analysis</h4>
+<p>There are many applications for face detection, analysis, and recognition. For example,</p>
+<ul>
+<li>Security - facial recognition can be used in building security applications, and increasingly it is used in smart phones operating systems for unlocking devices.</li>
+<li>Social media - facial recognition can be used to automatically tag known friends in photographs.</li>
+<li>Intelligent monitoring - for example, an automobile might include a system that monitors the driver’s face to determine if the driver is looking at the road, looking at a mobile device, or shows signs of tiredness.</li>
+<li>Advertising - analyzing faces in an image can help direct advertisements to an appropriate demographic audience.</li>
+<li>Missing persons - using public cameras systems, facial recognition can be used to identify if a missing person is in the image frame.</li>
+<li>Identity validation - useful at ports of entry kiosks where a person holds a special entry permit.</li>
+</ul>
+<h3 id="get-started-with-face-analysis-on-azure">Get started with Face analysis on Azure</h3>
+<p>Microsoft Azure provides multiple cognitive services that you can use to detect and analyze faces, including:</p>
+<ul>
+<li><strong>Computer Vision</strong>, which offers face detection and some basic face analysis, such as determining age.</li>
+<li><strong>Video Indexer</strong>, which you can use to detect and identify faces in a video.</li>
+<li><strong>Face</strong>, which offers pre-built algorithms that can detect, recognize, and analyze faces.</li>
+</ul>
+<h2 id="face">Face</h2>
+<p>Face currently supports the following functionality:</p>
+<ul>
+<li>Face Detection</li>
+<li>Face Verification</li>
+<li>Find Similar Faces</li>
+<li>Group faces based on similarities</li>
+<li>Identify people</li>
+</ul>
+<p>Face can return the rectangle coordinates for any human faces that are found in an image, as well as a series of attributes related to those faces such as:</p>
+<ul>
+<li><strong>Age</strong></li>
+<li><strong>Blur</strong></li>
+<li><strong>Emotion</strong></li>
+<li><strong>Exposure</strong></li>
+<li><strong>Facial hair</strong></li>
+<li><strong>Glasses</strong></li>
+<li><strong>Hair</strong></li>
+<li><strong>Head pose</strong></li>
+<li><strong>Makeup</strong></li>
+<li><strong>Noise</strong></li>
+<li><strong>Occlusion</strong></li>
+<li><strong>Smile</strong></li>
+</ul>
+<h4 id="tips-for-more-accurate-results">Tips for more accurate results</h4>
+<p>There are some considerations that can help improve the accuracy of the detection in the images:</p>
+<ul>
+<li>image format - supported images are JPEG, PNG, GIF, and BMP</li>
+<li>file size - 6 MB or smaller</li>
+<li>face size range - from 36 x 36 up to 4096 x 4096. Smaller or larger faces will not be detected</li>
+<li>other issues - face detection can be impaired by extreme face angles, occlusion (objects blocking the face such as sunglasses or a hand). Best results are obtained when the faces are full-frontal or as near as possible to full-frontal.</li>
+</ul>
+<h3 id="read-text-with-the-computer-vision-service">Read text with the Computer Vision service</h3>
+<p>The ability for computer systems to process written or printed text is an area of artificial intelligence (AI) where <em>computer vision</em> intersects with <em>natural language processing</em>. You need computer vision capabilities to “read” the text, and then you need natural language processing capabilities to make sense of it.</p>
+<p>The basic foundation of processing printed text is <em>optical character recognition</em> (OCR), in which a model can be trained to recognize individual shapes as letters, numerals, punctuation, or other elements of text. It’s now even possible to build models that can detect printed or handwritten text in an image and read it line-by-line or even word-by-word.</p>
+<p>At the other end of the scale, there is <em>machine reading comprehension</em> (MRC), in which an AI system not only reads the text characters, but can use a semantic model to interpret what the text is about.</p>
+<p>The ability to recognize printed and handwritten text in images, is beneficial in many scenarios such as:</p>
+<ul>
+<li>note taking</li>
+<li>digitizing forms, such as medical records or historical documents</li>
+<li>scanning printed or handwritten checks for bank deposits</li>
+</ul>
+<h3 id="get-started-with-ocr-on-azure">Get started with OCR on Azure</h3>
+<h4 id="use-the-computer-vision-service-to-read-text">Use the Computer Vision service to read text</h4>
+<p>The Computer Vision service provides two application programming interfaces (APIs) that you can use to read text in images: the <strong>OCR</strong> API and the <strong>Read</strong> API.</p>
+<h3 id="the-ocr-api">The OCR API</h3>
+<p>The OCR API is designed for quick extraction of small amounts of text in images. It operates synchronously to provide immediate results, and can recognize text in numerous languages.</p>
+<p>When you use the OCR API to process an image, it returns a hierarchy of information that consists of:</p>
+<ul>
+<li><strong>Regions</strong> in the image that contain text</li>
+<li><strong>Lines</strong> of text in each region</li>
+<li><strong>Words</strong> in each line of text</li>
+</ul>
+<p>For each of these elements, the OCR API also returns <em>bounding box</em> coordinates that define a rectangle to indicate the location in the image where the region, line, or word appears.</p>
+<h3 id="the-read-api">The Read API</h3>
+<p>The OCR method can have issues with false positives when the image is considered text-dominate. The Read API uses the latest recognition models and is optimized for images that have a significant amount of text or has considerable visual noise.</p>
+<p>Because the Read API can work with larger documents, it works asynchronously so as not to block your application while it is reading the content and returning results to your application. This means that to use the Read API, your application must use a three-step process:</p>
+<ol>
+<li>Submit an image to the API, and retrieve an <em>operation ID</em> in response.</li>
+<li>Use the operation ID to check on the status of the image analysis operation, and wait until it has completed.</li>
+<li>Retrieve the results of the operation.</li>
+</ol>
+<p>The results from the Read API are arranged into the following hierarchy:</p>
+<ul>
+<li><strong>Pages</strong> - One for each page of text, including information about the page size and orientation.</li>
+<li><strong>Lines</strong> - The lines of text on a page.</li>
+<li><strong>Words</strong> - The words in a line of text.</li>
+</ul>
+<p>Each line and word includes bounding box coordinates indicating its position on the page.</p>
+<h2 id="analyze-receipts-with-the-form-recognizer-service">Analyze receipts with the Form Recognizer service</h2>
+<p>A common problem in many organizations is the need to process receipt or invoice data. It’s relatively easy to scan receipts to create digital images or PDF documents, and it’s possible to use optical character recognition (OCR) technologies to extract the text contents from the digitized documents. However, typically someone still needs to review the extracted text to make sense of the information it contains.</p>
+<p>Increasingly, organizations with large volumes of receipts and invoices to process are looking for artificial intelligence (AI) solutions that can not only extract the text data from receipts, but also intelligently interpret the information they contain.</p>
+<h3 id="get-started-with-receipt-analysis-on-azure">Get started with receipt analysis on Azure</h3>
+<p>The <strong>Form Recognizer</strong> in Azure provides intelligent form processing capabilities that you can use to automate the processing of data in documents such as forms, invoices, and receipts. It combines state-of-the-art optical character recognition (OCR) with predictive models that can interpret form data by:</p>
+<ul>
+<li>Matching field names to values.</li>
+<li>Processing tables of data.</li>
+<li>Identifying specific types of field, such as dates, telephone numbers, addresses, totals, and others.</li>
+</ul>
+<p>Form Recognizer supports automated document processing through:</p>
+<ul>
+<li><strong>A pre-built receipt model</strong> that is provided out-of-the-box, and is trained to recognize and extract data from sales receipts.</li>
+<li><strong>Custom models</strong>, which enable you to extract what are known as key/value pairs and table data from forms. Custom models are trained using your own data, which helps to tailor this model to your specific forms.</li>
+</ul>
+<h4 id="using-the-pre-built-receipt-model">Using the pre-built receipt model</h4>
+<p>Currently the pre-built receipt model is designed to recognize common receipts, in English, that are common to the USA. Examples are receipts used at restaurants, retail locations, and gas stations. The model is able to extract key information from the receipt slip:</p>
+<ul>
+<li>time of transaction</li>
+<li>date of transaction</li>
+<li>merchant information</li>
+<li>taxes paid</li>
+<li>receipt totals</li>
+<li>other pertinent information that may be present on the receipt</li>
+<li>all text on the receipt is recognized and returned as well</li>
+</ul>
+<p>Use the following guidelines to get the best results when using a custom model.</p>
+<ul>
+<li>Images must be JPEG, PNG, BMP, PDF, or TIFF formats</li>
+<li>File size must be less than 50 MB</li>
+<li>Image size between 50 x 50 pixels and 10000 x 10000 pixels</li>
+<li>For PDF documents, no larger than 17 inches x 17 inches</li>
+</ul>
+<h1 id="explore-natural-language-processing">Explore natural language processing</h1>
+<h2 id="analyze-text-with-the-text-analytics-service">Analyze text with the Text Analytics service</h2>
+<p>Analyzing text is a process where you evaluate different aspects of a document or phrase, in order to gain insights into the content of that text. For the most part, humans are able to read some text and understand the meaning behind it.</p>
+<h3 id="text-analytics-techniques">Text Analytics Techniques</h3>
+<p>Text analytics is a process where an artificial intelligence (AI) algorithm, running on a computer, evaluates these same attributes in text, to determine specific insights. A person will typically rely on their own experiences and knowledge to achieve the insights. A computer must be provided with similar knowledge to be able to perform the task. There are some commonly used techniques that can be used to build software to analyze text, including:</p>
+<ul>
+<li>Statistical analysis of terms used in the text.</li>
+<li>Extending frequency analysis to multi-term phrases, commonly known as <em>N-grams</em></li>
+<li>Applying <em>stemming</em> or <em>lemmatization</em> algorithms to normalize words before counting them</li>
+<li>Applying linguistic structure rules to analyze sentences - for example, breaking down sentences into tree-like structures such as a <em>noun phrase</em>, which itself contains <em>nouns</em>, <em>verbs</em>, <em>adjectives</em>, and so on.</li>
+<li>Encoding words or terms as numeric features that can be used to train a machine learning model. For example, to classify a text document based on the terms it contains. This technique is often used to perform <em>sentiment analysis</em>, in which a document is classified as positive or negative.</li>
+<li>Creating <em>vectorized</em> models that capture semantic relationships between words by assigning them to locations in n-dimensional space.</li>
+</ul>
+<p>In Microsoft Azure, the <strong>Text Analytics</strong> cognitive service can help simplify application development by using pre-trained models that can:</p>
+<ul>
+<li>Determine the language of a document or text (for example, French or English).</li>
+<li>Perform sentiment analysis on text to determine a positive or negative sentiment.</li>
+<li>Extract key phrases from text that might indicate its main talking points.</li>
+<li>Identify and categorize entities in the text. Entities can be people, places, organizations, or even everyday items such as dates, times, quantities, and so on.</li>
+</ul>
+<p>In this module, you’ll explore some of these capabilities and gain an understanding of how you might apply them to applications such as:</p>
+<ul>
+<li>A social media feed analyzer to detect sentiment around a political campaign or a product in market.</li>
+<li>A document search application that extracts key phrases to help summarize the main subject matter of documents in a catalog.</li>
+<li>A tool to extract brand information or company names from documents or other text for identification purposes.</li>
+</ul>
+<h3 id="get-started-with-text-analytics-on-azure">Get started with Text Analytics on Azure</h3>
+<p>The Text Analytics service is a part of the Azure Cognitive Services offerings that can perform advanced natural language processing over raw text.</p>
+<h4 id="language-detection">Language detection</h4>
+<p>Use the language detection capability of the Text Analytics service to identify the language in which text is written. You can submit multiple documents at a time for analysis. For each document submitted to it, the service will detect:</p>
+<ul>
+<li>The language name (for example “English”).</li>
+<li>The ISO 6391 language code (for example, “en”).</li>
+<li>A score indicating a level of confidence in the language detection.</li>
+</ul>
+<p>The language detection service will focus on the <em><strong>predominant</strong></em> language in the text. The service uses an algorithm to determine the predominant language, such as length of phrases or total amount of text for the language compared to other languages in the text.</p>
+<h5 id="ambiguous-or-mixed-language-content">Ambiguous or mixed language content</h5>
+<p>There may be text that is ambiguous in nature, or that has mixed language content. These situations can present a challenge to the service. An ambiguous content example would be a case where the document contains limited text, or only punctuation. For example, using the service to analyze the text “:-)”, results in a value of <strong>unknown</strong> for the language name and the language identifier, and a score of <strong>NaN</strong> (which is used to indicate <em>not a number</em>).</p>
+<h4 id="sentiment-analysis">Sentiment analysis</h4>
+<p>The Text Analytics service can evaluate text and return sentiment scores and labels for each sentence. This capability is useful for detecting positive and negative sentiment in social media, customer reviews, discussion forums and more.</p>
+<p>Using the pre-built machine learning classification model, the service evaluates the text and returns a sentiment score in the range of 0 to 1, with values closer to 1 being a positive sentiment. Scores that are close to the middle of the range (0.5) are considered neutral or indeterminate.</p>
+<h5 id="indeterminate-sentiment">Indeterminate sentiment</h5>
+<p>A score of 0.5 might indicate that the sentiment of the text is indeterminate, and could result from text that does not have sufficient context to discern a sentiment or insufficient phrasing. For example, a list of words in a sentence that has no structure, could result in an indeterminate score.</p>
+<h4 id="key-phrase-extraction">Key phrase extraction</h4>
+<p>Key phrase extraction is the concept of evaluating the text of a document, or documents, and then identifying the main talking points of the document(s).</p>
+<h4 id="entity-recognition">Entity recognition</h4>
+<p>You can provide the Text Analytics service with unstructured text and it will return a list of <em>entities</em> in the text that it recognizes. An entity is essentially an item of a particular type or a category; and in some cases, subtype. For recognized entities, the service returns a URL for a relevant <em>Wikipedia</em> article.</p>
+<h2 id="recognize-and-synthesize-speech">Recognize and synthesize speech</h2>
+<p>Increasingly, we expect artificial intelligence (AI) solutions to accept vocal commands and provide spoken responses.</p>
+<p>To enable this kind of interaction, the AI system must support two capabilities:</p>
+<ul>
+<li><strong>Speech recognition</strong> - the ability to detect and interpret spoken input.</li>
+<li><strong>Speech synthesis</strong> - the ability to generate spoken output.</li>
+</ul>
+<h4 id="speech-recognition">Speech recognition</h4>
+<p>Speech recognition is concerned with taking the spoken word and converting it into data that can be processed - often by transcribing it into a text representation. The spoken words can be in the form of a recorded voice in an audio file, or live audio from a microphone. Speech patterns are analyzed in the audio to determine recognizable patterns that are mapped to words. To accomplish this feat, the software typically uses multiple types of model, including:</p>
+<ul>
+<li>An <em>acoustic</em> model that converts the audio signal into phonemes (representations of specific sounds).</li>
+<li>A <em>language</em> model that maps phonemes to words, usually using a statistical algorithm that predicts the most probable sequence of words based on the phonemes.</li>
+</ul>
+<p>The recognized words are typically converted to text, which you can use for various purposes, such as.</p>
+<ul>
+<li>Providing closed captions for recorded or live videos</li>
+<li>Creating a transcript of a phone call or meeting</li>
+<li>Automated note dictation</li>
+<li>Determining intended user input for further processing</li>
+</ul>
+<h4 id="speech-synthesis">Speech synthesis</h4>
+<p>Speech synthesis is in many respects the reverse of speech recognition. It is concerned with vocalizing data, usually by converting text to speech. A speech synthesis solution typically requires the following information:</p>
+<ul>
+<li>The text to be spoken.</li>
+<li>The voice to be used to vocalize the speech.</li>
+</ul>
+<p>To synthesize speech, the system typically <em>tokenizes</em> the text to break it down into individual words, and assigns phonetic sounds to each word. It then breaks the phonetic transcription into <em>prosodic</em> units (such as phrases, clauses, or sentences) to create phonemes that will be converted to audio format. These phonemes are then synthesized as audio by applying a voice, which will determine parameters such as pitch and timbre; and generating an audio wave form that can be output to a speaker or written to a file.</p>
+<p>You can use the output of speech synthesis for many purposes, including:</p>
+<ul>
+<li>Generating spoken responses to user input.</li>
+<li>Creating voice menus for telephone systems.</li>
+<li>Reading email or text messages aloud in hands-free scenarios.</li>
+<li>Broadcasting announcements in public locations, such as railway stations or airports.</li>
+</ul>
+<h3 id="get-started-with-speech-on-azure">Get started with speech on Azure</h3>
+<p>Microsoft Azure offers both speech recognition and speech synthesis capabilities through the <strong>Speech</strong> cognitive service, which includes the following application programming interfaces (APIs):</p>
+<ul>
+<li>The <strong>Speech-to-Text</strong> API</li>
+<li>The <strong>Text-to-Speech</strong> API</li>
+</ul>
+<h4 id="the-speech-to-text-api">The speech-to-text API</h4>
+<p>You can use the speech-to-text API to perform real-time or batch transcription of audio into a text format. The audio source for transcription can be a real-time audio stream from a microphone or an audio file.</p>
+<p>The model that is used by the speech-to-text API, is based on the Universal Language Model that was trained by Microsoft. The data for the model is Microsoft-owned and deployed to Microsoft Azure. The model is optimized for two scenarios, conversational and dictation. You can also create and train your own custom models including acoustics, language, and pronunciation if the pre-built models from Microsoft do not provide what you need.</p>
+<h5 id="real-time-transcription">Real-time transcription</h5>
+<p>Real-time speech-to-text allows you to transcribe text in audio streams. You can use real-time transcription for presentations, demos, or any other scenario where a person is speaking.</p>
+<h5 id="batch-transcription">Batch transcription</h5>
+<p>Not all speech-to-text scenarios are real time. You may have audio recordings stored on a file share, a remote server, or even on Azure storage. You can point to audio files with a shared access signature (SAS) URI and asynchronously receive transcription results. Batch transcription should be run in an asynchronous manner because the batch jobs are scheduled on a <em>best-effort basis</em>.</p>
+<h4 id="the-text-to-speech-api">The text-to-speech API</h4>
+<p>The text-to-speech API enables you to convert text input to audible speech, which can either be played directly through a computer speaker or written to an audio file.</p>
+<h5 id="speech-synthesis-voices">Speech synthesis voices</h5>
+<p>When you use the text-to-speech API, you can specify the voice to be used to vocalize the text. The service includes multiple pre-defined voices with support for multiple languages and regional pronunciation, including <em>standard</em> voices as well as <em>neural</em> voices that leverage <em>neural networks</em> to overcome common limitations in speech synthesis with regard to intonation, resulting in a more natural sounding voice. You can also develop custom voices and use them with the text-to-speech API</p>
+<h2 id="translate-text-and-speech">Translate text and speech</h2>
+<h3 id="introduction-1">Introduction</h3>
+<p>Artificial Intelligence (AI) can help simplify communication by translating text or speech between languages, helping to remove barriers to communication across countries and cultures.</p>
+<h4 id="literal-and-semantic-translation">Literal and semantic translation</h4>
+<p>Early attempts at machine translation applied <em>literal</em> translations. A literal translation is where each word is translated to the corresponding word in the target language. This approach presents some issues. For one case, there may not be an equivalent word in the target language. Another case is where literal translation can change the meaning of the phrase or not get the context correct.<br>
+Artificial intelligence systems must be able to understand, not only the words, but also the <em>semantic</em> context in which they are used. In this way, the service can return a more accurate translation of the input phrase or phrases. The grammar rules, formal versus informal, and colloquialisms all need to be considered.</p>
+<h4 id="text-and-speech-translation">Text and speech translation</h4>
+<p><em>Text translation</em> can be used to translate documents from one language to another. <em>Speech translation</em> is used to translate between spoken languages, sometimes directly (speech-to-speech translation) and sometimes by translating to an intermediary text format (speech-to-text translation).</p>
+<h3 id="get-started-translation-in-azure">Get started translation in Azure</h3>
+<p>Microsoft Azure provides cognitive services that support translation. Specifically, you can use the following services:</p>
+<ul>
+<li>The <strong>Translator Text</strong> service, which supports text-to-text translation.</li>
+<li>The <strong>Speech</strong> service, which enables speech-to-text and speech-to-speech translation.</li>
+</ul>
+<h4 id="text-translation-with-the-translator-text-service">Text translation with the Translator Text service</h4>
+<p>The Translator Text service is easy to integrate in your applications, websites, tools, and solutions. The service uses a Neural Machine Translation (NMT) model for translation, which analyzes the semantic context of the text and renders a more accurate and complete translation as a result.</p>
+<h5 id="translator-text-service-language-support">Translator Text service language support</h5>
+<p>The Text Translator service supports text-to-text translation between <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/languages">more than 60 languages</a>. When using the service, you must specify the language you are translating <em><strong>from</strong></em> and the language you are translating <em><strong>to</strong></em> using ISO 639-1 language codes, such as <em>en</em> for English, <em>fr</em> for French, and <em>zh</em> for Chinese. Alternatively, you can specify cultural variants of languages by extending the language code with the appropriate 3166-1 cultural code - for example, <em>en-US</em> for US English, <em>en-GB</em> for British English, or <em>fr-CA</em> for Canadian French.</p>
+<p>When using the Text Translator service, you can specify one <em><strong>from</strong></em> language with multiple <em><strong>to</strong></em> languages, enabling you to simultaneously translate a source document into multiple languages.</p>
+<p>There’s no Python SDK for this service, but you can use its REST interface to submit requests to an endpoint over HTTP, which is relatively easy to do in Python by using the <strong>requests</strong> library. The information about the text to be translated and the resulting translated text are exchanged in JSON format.</p>
+<h5 id="optional-configurations">Optional Configurations</h5>
+<p>The Translator Text API offers some optional configuration to help you fine-tune the results that are returned, including:</p>
+<ul>
+<li><strong>Profanity filtering</strong>.</li>
+<li><strong>Selective translation</strong>. You can tag content so that it isn’t translated. For example, you may want to tag code, a brand name, or a word/phrase that doesn’t make sense when localized.</li>
+</ul>
+<h4 id="speech-translation-with-the-speech-service">Speech translation with the Speech service</h4>
+<p>The Speech service includes the following application programming interfaces (APIs):</p>
+<ul>
+<li><strong>Speech-to-text</strong> - used to transcribe speech from an audio source to text format.</li>
+<li><strong>Text-to-speech</strong> - used to generate spoken audio from a text source.</li>
+<li><strong>Speech Translation</strong> - used to translate speech in one language to text or speech in another.</li>
+</ul>
+<h5 id="speech-service-language-support">Speech service language support</h5>
+<p>As with the Translator Text service, you can specify one source language and one or more target languages to which the source should be translated. You can translate speech into <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#speech-translation">over 60 languages</a>.</p>
+<p>The source language must be specified using the extended language and culture code format, such as <em>es-US</em> for American Spanish. This requirement helps ensure that the source is understood properly, allowing for localized pronunciation and linguistic idioms.</p>
+<p>The target languages must be specified using a two-character language code, such as <em>en</em> for English or <em>de</em> for German.</p>
+<h2 id="create-a-language-model-with-language-understanding">Create a language model with Language Understanding</h2>
+<h3 id="introduction-2">Introduction</h3>
+<p>In 1950, the British mathematician Alan Turing devised the <em>Imitation Game</em>, which has become known as the <em>Turing Test</em> and hypothesizes that if a dialog is natural enough, you may not know whether you’re conversing with a human or a computer.</p>
+<p>To realize the aspiration of the imitation game, computers need not only to be able to accept language as input (either in text or audio format), but also to be able to interpret the semantic meaning of the input - in other words, <em>understand</em> what is being said.</p>
+<p>On Microsoft Azure, language understanding is supported through the <strong>Language Understanding Intelligent Service</strong>, more commonly known as <strong>Language Understanding</strong>. To work with Language Understanding, you need to take into account three core concepts: <em>utterances</em>, <em>entities</em>, and <em>intents</em>.</p>
+<h4 id="utterances">Utterances</h4>
+<p>An utterance is an example of something a user might say, and which your application must interpret. For example, when using a home automation system, a user might use the following utterances:</p>
+<blockquote>
+<p>“<em>Switch the fan on.</em>”</p>
+<p>“<em>Turn on the light.</em>”</p>
+</blockquote>
+<h4 id="entities">Entities</h4>
+<p>An entity is an item to which an utterance refers. For example, <strong>fan</strong> and <strong>light</strong> in the following utterances:</p>
+<blockquote>
+<p>“<em>Switch the <em><strong>fan</strong></em> on.</em>”</p>
+<p>“<em>Turn on the <em><strong>light</strong></em>.</em>”</p>
+</blockquote>
+<p>You can think of the <strong>fan</strong> and <strong>light</strong> entities as being specific instances of a general <strong>device</strong> entity.</p>
+<h4 id="intents">Intents</h4>
+<p>An intent represents the purpose, or goal, expressed in a user’s utterance. For example, for both of the previously considered utterances, the intent is to turn a device on; so in your Language Understanding application, you might define a <strong>TurnOn</strong> intent that is related to these utterances.</p>
+<p>In this table there are numerous utterances used for each of the intents. The intent should be a concise way of grouping the utterance tasks. Of special interest is the <em><strong>None</strong></em> intent. You should consider always using the None intent to help handle utterances that do not map any of the utterances you have entered. The None intent is considered a fallback, and is typically used to provide a generic response to users when their requests don’t match any other intent.</p>
+<h3 id="getting-started-with-language-understanding">Getting started with Language Understanding</h3>
+<p>Creating a language understanding application with Language Understanding consists of two main tasks. First you must define entities, intents, and utterances with which to train the language model - referred to as <em>authoring</em> the model. Then you must publish the model so that client applications can use it for intent and entity <em>prediction</em> based on user input.</p>
+<p>If you choose to create a Language Understanding resource, you will be prompted to choose <em>authoring</em>, <em>prediction</em>, or <em>both</em> - and it’s important to note that if you choose “both”, then <em><strong>two</strong></em> resources are created - one for authoring and one for prediction.</p>
+<h4 id="authoring">Authoring</h4>
+<p>After you’ve created an authoring resource, you can use it to author and train a Language Understanding application by defining the entities and intents that your application will predict as well as utterances for each intent that can be used to train the predictive model.</p>
+<p>Language Understanding provides a comprehensive collection of prebuilt <em>domains</em> that include pre-defined intents and entities for common scenarios; which you can use as a starting point for your model. You can also create your own entities and intents.</p>
+<p>utterances you define for it to create entities for them; or you can create the entities ahead of time and then map them to words in utterances as you’re creating the intents.</p>
+<p>You can write code to define the elements of your model, but in most cases it’s easiest to author your model using the Language Understanding portal - a web-based interface for creating and managing Language Understanding applications.</p>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/create-language-model-with-language-understanding/2-get-started">hier weiter</a><br>
 <a href="https://github.com/MicrosoftLearning/mslearn-ai900">mslearn-ai900</a></p>
 
