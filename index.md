@@ -828,8 +828,77 @@ Artificial intelligence systems must be able to understand, not only the words, 
 <h4 id="authoring">Authoring</h4>
 <p>After you’ve created an authoring resource, you can use it to author and train a Language Understanding application by defining the entities and intents that your application will predict as well as utterances for each intent that can be used to train the predictive model.</p>
 <p>Language Understanding provides a comprehensive collection of prebuilt <em>domains</em> that include pre-defined intents and entities for common scenarios; which you can use as a starting point for your model. You can also create your own entities and intents.</p>
-<p>utterances you define for it to create entities for them; or you can create the entities ahead of time and then map them to words in utterances as you’re creating the intents.</p>
+<p>When you create entities and intents, you can do so in any order. You can create an intent, and select words in the sample utterances you define for it to create entities for them; or you can create the entities ahead of time and then map them to words in utterances as you’re creating the intents.</p>
 <p>You can write code to define the elements of your model, but in most cases it’s easiest to author your model using the Language Understanding portal - a web-based interface for creating and managing Language Understanding applications.</p>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/create-language-model-with-language-understanding/2-get-started">hier weiter</a><br>
-<a href="https://github.com/MicrosoftLearning/mslearn-ai900">mslearn-ai900</a></p>
+<p><strong>Important</strong>: Authoring resources must be created in one of three <em>regions</em> (Europe, Australia, or US). Models created in European or Australian authoring resources can only be deployed to prediction resources in Europe or Australia respectively; models created in US authoring resources can be deployed to prediction resources in any Azure location other than Europe and Australia.</p>
+<p>Language Understanding portals for available authoring regions:</p>
+<ul>
+<li>US: <a href="https://www.luis.ai">https://www.luis.ai</a></li>
+<li>Europe: <a href="https://eu.luis.ai">https://eu.luis.ai</a></li>
+<li>Australia: <a href="https://au.luis.ai">https://au.luis.ai</a></li>
+</ul>
+<h5 id="creating-intents">Creating intents</h5>
+<p>Define intents based on actions a user would want to perform with your application. For each intent, you should include a variety of utterances that provide examples of how a user might express the intent.</p>
+<p>If an intent can be applied to multiple entities, be sure to include sample utterances for each potential entity; and ensure that each entity is identified in the utterance.</p>
+<h5 id="creating-entities">Creating entities</h5>
+<p>There are four types of entities:</p>
+<ul>
+<li><strong>Machine-Learned</strong>: Entities that are learned by your model during training from context in the sample utterances you provide.</li>
+<li><strong>List</strong>: Entities that are defined as a hierarchy of lists and sublists. For example, a <strong>device</strong> list might include sublists for <strong>light</strong> and <strong>fan</strong>. For each list entry, you can specify synonyms, such as <strong>lamp</strong> for <strong>light</strong>.</li>
+<li><strong>RegEx</strong>: Entities that are defined as a <em>regular expression</em> that describes a pattern - for example, you might define a pattern like <strong>[0-9]{3}-[0-9]{3}-[0-9]{4}</strong> for telephone numbers of the form <em><strong>555-123-4567</strong></em>.</li>
+<li><strong>Pattern.any</strong>: Entities that are used with <em>patterns</em> to define complex entities that may be hard to extract from sample utterances.</li>
+</ul>
+<h5 id="training-the-model">Training the model</h5>
+<p>After you have defined the intents and entities in your model, and included a suitable set of sample utterances; the next step is to train the model. Training is the process of using your sample utterances to teach your model to match natural language expressions that a user might say to probable intents and entities.</p>
+<p>After training the model, you can test it by submitting text and reviewing the predicted intents. Training and testing is an iterative process.</p>
+<h4 id="predicting">Predicting</h4>
+<p>When you are satisfied with the results from the training and testing, you can publish your Language Understanding application to a prediction resource for consumption.</p>
+<h2 id="explore-conversational-ai">Explore conversational AI</h2>
+<h3 id="build-a-bot-with-qna-maker-and-azure-bot-service">Build a bot with QnA Maker and Azure Bot Service</h3>
+<h4 id="conversational-ai">Conversational AI</h4>
+<p>Increasingly, organizations are turning to artificial intelligence (AI) solutions that make use of AI agents, commonly known as <em>bots</em> to provide a first-line of automated support through the full range of channels that we use to communicate. Bots are designed to interact with users in a conversational manner.<br>
+Bots can be designed to work across multiple channels, including email, social media platforms, and even voice calls.<br>
+Conversations typically take the form of messages exchanged in turns; and one of the most common kinds of conversational exchange is a question followed by an answer. This pattern forms the basis for many user support bots, and can often be based on existing FAQ documentation. To implement this kind of solution, you need:</p>
+<ul>
+<li>A <em>knowledge base</em> of question and answer pairs - usually with some built-in natural language processing model to enable questions that can be phrased in multiple ways to be understood with the same semantic meaning.</li>
+<li>A <em>bot service</em> that provides an interface to the knowledge base through one or more channels.</li>
+</ul>
+<h3 id="get-started-with-qna-maker-and-azure-bot-service">Get started with QnA Maker and Azure Bot Service</h3>
+<p>You can easily create a user support bot solution on Microsoft Azure using a combination of two core technologies:</p>
+<ul>
+<li><strong>QnA Maker</strong>. This cognitive service enables you to create and publish a knowledge base with built-in natural language processing capabilities.</li>
+<li><strong>Azure Bot Service</strong>. This service provides a framework for developing, publishing, and managing bots on Azure.</li>
+</ul>
+<h4 id="creating-a-qna-maker-knowledge-base">Creating a QnA Maker knowledge base</h4>
+<p>To create a knowledge base, you must first provision a <strong>QnA Maker</strong> resource in your Azure subscription.</p>
+<h5 id="define-questions-and-answers">Define questions and answers</h5>
+<p>After provisioning a QnA Maker resource, you can use the QnA Maker portal to create a knowledge base that consists of question-and-answer pairs. These questions and answers can be:</p>
+<ul>
+<li>Generated from an existing FAQ document or web page.</li>
+<li>Imported from a pre-defined <em>chit-chat</em> data source.</li>
+<li>Entered and edited manually.</li>
+</ul>
+<p>In many cases, a knowledge base is created using a combination of all of these techniques. Questions in the knowledge base can be assigned <em>alternative phrasing</em> to help consolidate questions with the same meaning.</p>
+<h5 id="train-and-test-the-knowledge-base">Train and test the knowledge base</h5>
+<p>After creating a set of question-and-answer pairs, you must train your knowledge base. This process analyzes your literal questions and answers and applies a built-in natural language processing model to match appropriate answers to questions, even when they are not phrased exactly as specified in your question definitions.</p>
+<p>After training, you can use the built-in test interface in the QnA Maker portal to test your knowledge base by submitting questions and reviewing the answers that are returned.</p>
+<h5 id="publish-the-knowledge-base">Publish the knowledge base</h5>
+<p>When you’re satisfied with your trained knowledge base, you can publish it so that client applications can use it over its REST interface. To access the knowledge base, client applications require:</p>
+<ul>
+<li>The knowledge base ID</li>
+<li>The knowledge base endpoint</li>
+<li>The knowledge base authorization key</li>
+</ul>
+<h4 id="build-a-bot-with-the-azure-bot-service">Build a bot with the Azure Bot Service</h4>
+<h5 id="create-a-bot-for-your-knowledge-base">Create a bot for your knowledge base</h5>
+<p>You can create a custom bot by using the Microsoft Bot Framework SDK to write code that controls conversation flow and integrates with your QnA Maker knowledge base. However, an easier approach is to use the automatic bot creation functionality of QnA Maker, which enables you create a bot for your published knowledge base and publish it as an Azure Bot Service application with just a few clicks.</p>
+<h5 id="extend-and-configure-the-bot">Extend and configure the bot</h5>
+<p>After creating your bot, you can manage it in the Azure portal, where you can:</p>
+<ul>
+<li>Extend the bot’s functionality by adding custom code.</li>
+<li>Test the bot in an interactive test interface.</li>
+<li>Configure logging, analytics, and integration with other services.</li>
+</ul>
+<h3 id="connect-channels">Connect channels</h3>
+<p>When your bot is ready to be delivered to users, you can connect it to multiple <em>channels</em>; making it possible for users to interact with it through web chat, email, Microsoft Teams, and other common communication media.</p>
 
